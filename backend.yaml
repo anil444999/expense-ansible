@@ -22,4 +22,16 @@
   - name : create app directory
     ansible.builtin.file:
       path: /app
-      state: directory    
+      state: directory
+
+  - name: download app directory
+    ansible.builtin.get_url: 
+      url:  https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+      dest: /tmp/backend.zip   
+
+  - name: unzip backend code  
+    ansible.builtin.unarchive:
+      src: /tmp/backend.zip # by default checks in ansible server
+      dests: /app
+      remote_src: yes
+
